@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const date = require('date-and-time');
 
 const appsData = require('./playstore');
 const app = express();
@@ -26,6 +27,13 @@ app.get('/apps', (req, res) => {
         }
         return a.App > b.App ? 1 : -1; //app names should never be identical, so useful tiebreaker
       });
+    } else if(req.query.sort == 'updated') {
+      sortedData = appsData.sort((a, b) => {
+        if(date.parse(a['Last Updated'], 'MMMM D, YYYY') > date.parse(b['Last Updated'], 'MMMM D, YYYY')) {
+          return -1;
+        }
+        return 1;
+      })
     } else {
       res.status(400).send("Sort must be one of 'app' and 'rating' ");
       return;
@@ -44,7 +52,7 @@ app.get('/apps', (req, res) => {
         item.Genres.toLowerCase().includes(req.query.genre)
       );
     } else {
-      res.status(400).send('genre does not exist');
+      res.status(400).send('Genre must one of Card, Arcade, Casual, Action, and Puzzle');
       return;
     }
   }
