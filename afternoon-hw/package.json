@@ -10,7 +10,7 @@
     "chai": "^4.2.0",
     "date-and-time": "^0.10.0",
     "datejs": "^1.0.0-rc3",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "morgan": "^1.9.1"
   },
   "devDependencies": {
